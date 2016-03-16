@@ -3,6 +3,15 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = Appointment.all
+    
+    if start_time = params[:start_time]
+      @appointments = Appointment.where(start_time: start_time)
+    end
+
+    if end_time = params[:end_time]
+      @appointments = Appointment.where(end_time: end_time)
+    end
+
     render json: @appointments, status: 200
   end
 
