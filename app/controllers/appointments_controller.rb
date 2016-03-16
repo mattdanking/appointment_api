@@ -3,6 +3,7 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = Appointment.all
+    render json: @appointment
   end
 
   def new
@@ -14,9 +15,9 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        format.json { render :show, status: 200, location: @appointment }
+        format.json { render :show, status: 201, location: @appointment }
       else
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        format.json { render json: @appointment.errors, status: 422 }
       end
     end
   end
@@ -26,7 +27,7 @@ class AppointmentsController < ApplicationController
       if @appointment.update(appointment_params)
         format.json { render :show, status: :ok, location: @appointment }
       else
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        format.json { render json: @appointment.errors, status: 422 }
       end
     end
   end
