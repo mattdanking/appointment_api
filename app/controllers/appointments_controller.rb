@@ -13,22 +13,18 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
 
-    respond_to do |format|
-      if @appointment.save
-        render json: @appointment, status: 201, location: @appointment
-      else
-        render json: @appointment.errors, status: 422
-      end
+    if @appointment.save
+      render json: @appointment, status: 201, location: @appointment
+    else
+      render json: @appointment.errors, status: 422
     end
   end
 
   def update
-    respond_to do |format|
-      if @appointment.update(appointment_params)
-        render json: @appointment, status: :ok, location: @appointment
-      else
-        render json: @appointment.errors, status: 422
-      end
+    if @appointment.update(appointment_params)
+      render json: @appointment, status: :ok, location: @appointment
+    else
+      render json: @appointment.errors, status: 422
     end
   end
 
