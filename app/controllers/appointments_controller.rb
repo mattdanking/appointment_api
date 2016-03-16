@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = Appointment.all
-    render json: @appointment
+    render json: @appointments, status: 200
   end
 
   def new
