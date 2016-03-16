@@ -15,9 +15,9 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
-        format.json { render :show, status: 201, location: @appointment }
+        render json: @appointment, status: 201, location: @appointment
       else
-        format.json { render json: @appointment.errors, status: 422 }
+        render json: @appointment.errors, status: 422
       end
     end
   end
@@ -25,9 +25,9 @@ class AppointmentsController < ApplicationController
   def update
     respond_to do |format|
       if @appointment.update(appointment_params)
-        format.json { render :show, status: :ok, location: @appointment }
+        render json: @appointment, status: :ok, location: @appointment
       else
-        format.json { render json: @appointment.errors, status: 422 }
+        render json: @appointment.errors, status: 422
       end
     end
   end
