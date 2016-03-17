@@ -6,8 +6,8 @@ class Appointment < ActiveRecord::Base
 
   def check_validity
     @appointments = Appointment.all
-    current_start = DateTime.strptime(self.start_time,"%m/%d/%Y %H:%M").to_time
-    current_end = DateTime.strptime(self.end_time,"%m/%d/%Y %H:%M").to_time
+    current_start = DateTime.strptime(self.start_time,"%m/%d/%y %H:%M").to_time
+    current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time
     valid = false
 
     if current_start > Time.now && current_end > Time.now
@@ -17,8 +17,8 @@ class Appointment < ActiveRecord::Base
     end
 
     @appointments.each do |appt|
-      appt_start = DateTime.strptime(appt.start_time,"%m/%d/%Y %H:%M").to_time
-      appt_end = DateTime.strptime(appt.end_time,"%m/%d/%Y %H:%M").to_time
+      appt_start = DateTime.strptime(appt.start_time,"%m/%d/%y %H:%M").to_time
+      appt_end = DateTime.strptime(appt.end_time,"%m/%d/%y %H:%M").to_time
 
       if current_start >= appt_start && current_start <= appt_end
         valid = false
