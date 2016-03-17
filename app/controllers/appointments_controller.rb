@@ -12,7 +12,7 @@ class AppointmentsController < ApplicationController
     elsif end_time
       @appointments = Appointment.where(end_time: end_time)
     else
-      @appointments = Appointment.where(start_time: start_time)
+      @appointments = Appointment.all
     end
 
     render json: @appointments, status: 200
