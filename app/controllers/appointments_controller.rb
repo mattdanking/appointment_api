@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
     start_time = params[:start_time]
     end_time = params[:end_time]
 
-    if start_time && end_time
+    if start_time && end_time 
       @appointments = Appointment.where(start_time: start_time, end_time: end_time)
     elsif start_time
       @appointments = Appointment.where(start_time: start_time)
@@ -16,10 +16,6 @@ class AppointmentsController < ApplicationController
     end
 
     render json: @appointments, status: 200
-  end
-
-  def new
-    @appointment = Appointment.new
   end
 
   def create

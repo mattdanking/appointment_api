@@ -17,9 +17,9 @@ class Appointment < ActiveRecord::Base
     end
 
     @appointments.each do |appt|
-      if current_start > appt.start_time && current_start < appt.end_time
+      if current_start >= appt.start_time && current_start <= appt.end_time
         valid = false
-      elsif current_end > appt.start_time && current_end < appt.end_time
+      elsif current_end >= appt.start_time && current_end <= appt.end_time
         valid = false
       else
         valid = true
