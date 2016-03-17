@@ -2,14 +2,14 @@ class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:update, :destroy]
 
   def index
-    @appointments = Appointment.all
-
     if start_time = params[:start_time]
       @appointments = Appointment.where(start_time: start_time)
-    end
-
-    if end_time = params[:end_time]
+    elsif end_time = params[:end_time]
       @appointments = Appointment.where(end_time: end_time)
+    elsif start_time = params[:start_time] && end_time = params[:end_time]
+      @appointments = Appointment.where(start_time: start_time, end_time: end_time)
+    elsif
+      @appointments = Appointment.where(start_time: start_time)
     end
 
     render json: @appointments, status: 200
@@ -31,7 +31,7 @@ class AppointmentsController < ApplicationController
 
   def update
     if @appointment.check_validity.update(appointment_params)
-      render json: @appointment, status: :ok, location: @appointment
+      render json: @appointment, status: 200, location: @appointment
     else
       render json: @appointment.errors, status: 422
     end
@@ -39,18 +39,14 @@ class AppointmentsController < ApplicationController
 
   def destroy
     @appointment.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    head 204
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_appointment
       @appointment = Appointment.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
       params.require(:appointment).permit(:start_time, :end_time, :first_name, :last_name, :comments)
     end
