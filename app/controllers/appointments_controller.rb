@@ -2,13 +2,16 @@ class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:update, :destroy]
 
   def index
-    if start_time = params[:start_time]
-      @appointments = Appointment.where(start_time: start_time)
-    elsif end_time = params[:end_time]
-      @appointments = Appointment.where(end_time: end_time)
-    elsif start_time = params[:start_time] && end_time = params[:end_time]
+    start_time = params[:start_time]
+    end_time = params[:end_time]
+
+    if start_time && end_time
       @appointments = Appointment.where(start_time: start_time, end_time: end_time)
-    elsif
+    elsif start_time
+      @appointments = Appointment.where(start_time: start_time)
+    elsif end_time
+      @appointments = Appointment.where(end_time: end_time)
+    else
       @appointments = Appointment.where(start_time: start_time)
     end
 
