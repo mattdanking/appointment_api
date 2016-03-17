@@ -20,19 +20,33 @@ class AppointmentsController < ApplicationController
 
   def create
     @appointment = Appointment.new(appointment_params)
-
-    if @appointment.check_validity.save
-      render json: @appointment, status: 201, location: @appointment
-    else
-      render json: @appointment.errors, status: 422
+    p "^" * 50
+    @appointment.check_future
+    if @appointment.check_future && @appointment.check_overlap
+      p "%" * 50
+      if @appointment.save
+        render json: @appointment, status: 201, location: @appointment
+      else
+        render json: @appointment.errors, status: 422
+      end
     end
   end
 
   def update
-    if @appointment.check_validity.update(appointment_params)
-      render json: @appointment, status: 200, location: @appointment
+    p '!' * 50
+    p appointment_params
+
+    if @appointment.check_updated_params(appointment_params)
+      p '@' * 50
+      if @appointment.update(appointment_params)
+        p '#' * 50
+        render json: @appointment, status: 200
+      else
+        p '*' * 50
+        render json: @appointment.errors, status: 422
+      end
     else
-      render json: @appointment.errors, status: 422
+      p "did not workk" * 10
     end
   end
 

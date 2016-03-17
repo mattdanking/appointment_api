@@ -4,30 +4,76 @@ class Appointment < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true 
 
-  def check_validity
-    @appointments = Appointment.all
+  @@appointments = Appointment.all
+  @@valid = false
+  @@new_appt = true
+
+  ## Checks if an appointment time is in the future ##
+  def check_future
     current_start = DateTime.strptime(self.start_time,"%m/%d/%y %H:%M").to_time
     current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time
-    valid = false
+
+    p current_start
+    p current_end
 
     if current_start > Time.now && current_end > Time.now
-      valid = true
+      @@valid = true
     else
-      valid = false
+      @@valid = false
     end
+    @@valid
+    p @@valid
+  end
 
-    @appointments.each do |appt|
+  ## Checks if an appointment time overlaps an existing appointment ##
+  def check_overlap
+    current_start = DateTime.strptime(self.start_time,"%m/%d/%y %H:%M").to_time
+    current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time
+
+    @@appointments.each do |appt|
       appt_start = DateTime.strptime(appt.start_time,"%m/%d/%y %H:%M").to_time
       appt_end = DateTime.strptime(appt.end_time,"%m/%d/%y %H:%M").to_time
 
-      if current_start >= appt_start && current_start <= appt_end
-        valid = false
-      elsif current_end >= appt_start && current_end <= appt_end
-        valid = false
+      ## if the appointment being checked is a new appointment ##
+      if @@new_appt
+        if current_start >= appt_start && current_start <= appt_end
+          @@valid = false
+        elsif current_end >= appt_start && current_end <= appt_end
+          @@valid = false
+        else
+          @@valid = true
+        end
+
+      ## if the appointment being checked is a old appointment being updated ##
       else
-        valid = true
+        if current_start > appt_start && current_start < appt_end
+          @@valid = false
+        elsif current_end > appt_start && current_end < appt_end
+          @@valid = false
+        else
+          @@valid = true
+        end
       end
+
     end
-    valid
+    @@valid
+    p @@valid
   end
+
+  ## if the appointment is being updated, assigns new parameters before checking future and overlap ##
+  def check_updated_params(params)
+    p params
+    self.assign_attributes(params)
+    p self
+    @@new_appt = false
+
+    if self.check_future && self.check_overlap
+      @@valid = true
+    else
+      @@valid = false
+    end
+    @@valid
+    p @@valid
+  end
+
 end
