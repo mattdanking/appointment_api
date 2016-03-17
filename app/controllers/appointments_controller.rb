@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
 
   def index
     @appointments = Appointment.all
-    
+
     if start_time = params[:start_time]
       @appointments = Appointment.where(start_time: start_time)
     end
@@ -22,7 +22,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
 
-    if @appointment.save
+    if @appointment.check_validity.save
       render json: @appointment, status: 201, location: @appointment
     else
       render json: @appointment.errors, status: 422
@@ -30,7 +30,7 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    if @appointment.update(appointment_params)
+    if @appointment.check_validity.update(appointment_params)
       render json: @appointment, status: :ok, location: @appointment
     else
       render json: @appointment.errors, status: 422
