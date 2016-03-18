@@ -8,7 +8,7 @@ This was created using Ruby 2.2.4 and Ruby on Rails 4.2.5.1 framework. Postgres 
 
 When creating a new appointment, you must include the first 4 parameters: first name, last name, start time, end time
 
-GET `http://sleepy-waters-39201.herokuapp.com/api/appointments` ?"first_name"="Matt"&"last_name"="King"&"start_time"="03/15/16 7:20"&"end_time"="03/15/16 7:40"
+GET <code>http://sleepy-waters-39201.herokuapp.com/api/appointments<code> ?"first_name"="Matt"&"last_name"="King"&"start_time"="03/15/16 7:20"&"end_time"="03/15/16 7:40"
 
 == UPDATE Appointment
 
