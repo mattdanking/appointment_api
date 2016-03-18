@@ -8,22 +8,22 @@ This was created using Ruby 2.2.4 and Ruby on Rails 4.2.5.1 framework. Postgres 
 
 When creating a new appointment, you must include the first 4 parameters: first name, last name, start time, end time
 
-GET <code>http://sleepy-waters-39201.herokuapp.com/api/appointments<code> ?"first_name"="Matt"&"last_name"="King"&"start_time"="03/15/16 7:20"&"end_time"="03/15/16 7:40"
+GET http://sleepy-waters-39201.herokuapp.com/api/appointments?"first_name"="Matt"&"last_name"="King"&"start_time"="03/15/16 7:20"&"end_time"="03/15/16 7:40"
 
 == UPDATE Appointment
 
 When updating an existing appointment, you must provide the id of the appointment and pass the new parameters you wish to change to
 
-PATCH `http://sleepy-waters-39201.herokuapp.com/api/appointments/:id`?"first_name"="NewFirst"&"last_name"="NewLast"
+PATCH http://sleepy-waters-39201.herokuapp.com/api/appointments/:id?"first_name"="NewFirst"&"last_name"="NewLast"
 
 == DELETE Appointment
 
 When deleting an existing appointment, you must provide the id of the appointment you wish to delete
 
-DELETE `http://sleepy-waters-39201.herokuapp.com/api/appointments/:id`
+DELETE http://sleepy-waters-39201.herokuapp.com/api/appointments/:id
 
 == LIST Appointment(s)
 
 When listing appointments, you can choose to list all available appointments, or filter through them by start and end times
 
-GET `http://sleepy-waters-39201.herokuapp.com/api/appointments`?"start_time"="03/15/16 7:20"
+GET http://sleepy-waters-39201.herokuapp.com/api/appointments?"start_time"="03/15/16 7:20"
