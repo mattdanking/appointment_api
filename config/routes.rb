@@ -1,9 +1,9 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
 
-  constraints subdomain: 'api' do
-    namespace :api, path: '/' do
-      resources :appointments
-    end
+  namespace :api do
+    resources :appointments
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
