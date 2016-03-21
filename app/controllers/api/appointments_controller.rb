@@ -24,7 +24,7 @@ class API::AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
     if @appointment.check_future && @appointment.check_overlap
       if @appointment.save
-        render json: @appointment, status: 201, location: @appointment
+        render json: @appointment, status: 201
       else
         render json: @appointment.errors, status: 422
       end
