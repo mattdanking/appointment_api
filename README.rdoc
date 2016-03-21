@@ -1,6 +1,6 @@
 == APPOINTMENT API
 
-This API allows you to create, update, delete and list appointments which include a first name, last name, start time, end time, and optional comments. You are able to filter all of the available appointments by start time or end time. In addition, you can also create a new appointment or update an existing one as long as it is in the future and does not overlap another appointment.
+This API allows you to create, update, delete and list appointments which include a first name, last name, start time, end time, and optional comments. You are able to filter all of the available appointments by start time and end time or first and last name. In addition, you can also create a new appointment or update an existing one as long as it is in the future and does not overlap another appointment.
 
 This was created using Ruby 2.2.4 and Ruby on Rails 4.2.5.1 framework; Postman was used to test HTTP requests quickly and PostgreSQL was used to allow the API to be hosted on Heroku servers.
 
@@ -24,6 +24,6 @@ DELETE http://sleepy-waters-39201.herokuapp.com/api/appointments/:id
 
 == LIST Appointment(s)
 
-When listing appointments, you can choose to list all available appointments, or filter through them by start and end times
+When listing appointments, you must provide filter parameters by start and end times or first and last names
 
 GET http://sleepy-waters-39201.herokuapp.com/api/appointments?"start_time"="03/15/16 7:20"
