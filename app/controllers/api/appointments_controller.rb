@@ -1,19 +1,25 @@
 class API::AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:update, :destroy]
 
-  ## GET - lists all appointments, or filter if a start_time or end_time is included in parrams ##
+  ## GET - list / filter appointments by start_time and end_time or first and last name ##
   def index
     start_time = params[:start_time]
     end_time = params[:end_time]
+    first_name = params[:first_name]
+    last_name = params[:last_name]
 
-    if start_time && end_time 
+    if start_time && end_time
       @appointments = Appointment.where(start_time: start_time, end_time: end_time)
     elsif start_time
       @appointments = Appointment.where(start_time: start_time)
     elsif end_time
       @appointments = Appointment.where(end_time: end_time)
-    else
-      @appointments = Appointment.all
+    elsif first_name & last_name
+      @appointments = Appointment.where(first_name: first_name, last_name: last_name)
+    elsif first_name
+      @appointments = Appointment.where(first_name: first_name)
+    else last_name
+      @appointments = Appointment.where(last_name: last_name)
     end
 
     render json: @appointments, status: 200
