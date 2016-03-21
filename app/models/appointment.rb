@@ -5,17 +5,20 @@ class Appointment < ActiveRecord::Base
   validates :last_name, presence: true 
 
   @new_appt = true
-  @valid = false
+  @valid = true
 
   ## Checks if an appointment time is in the future ##
   def check_future
     current_start = DateTime.strptime(self.start_time,"%m/%d/%y %H:%M").to_time
-    current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time
+    current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time 
 
-    if current_start > Time.now && current_end > Time.now
-      @valid = true
-    else
-      @valid = false
+    # checks start time of appt is before end time #
+    if current_start < current_end
+      if current_start > Time.now && current_end > Time.now
+        @valid = true
+      else
+        @valid = false
+      end
     end
     @valid
     p @valid
@@ -35,7 +38,7 @@ class Appointment < ActiveRecord::Base
       if @new_appt
         if current_start >= appt_start && current_start <= appt_end
           @valid = false
-        else current_end >= appt_start && current_end <= appt_end
+        elsif current_end >= appt_start && current_end <= appt_end
           @valid = false
         end
 
@@ -43,7 +46,7 @@ class Appointment < ActiveRecord::Base
       else
         if current_start > appt_start && current_start < appt_end
           @valid = false
-        else current_end > appt_start && current_end < appt_end
+        elsif current_end > appt_start && current_end < appt_end
           @valid = false
         end
       end
