@@ -12,9 +12,6 @@ class Appointment < ActiveRecord::Base
     current_start = DateTime.strptime(self.start_time,"%m/%d/%y %H:%M").to_time
     current_end = DateTime.strptime(self.end_time,"%m/%d/%y %H:%M").to_time
 
-    p current_start
-    p current_end
-
     if current_start > Time.now && current_end > Time.now
       @valid = true
     else
@@ -38,20 +35,16 @@ class Appointment < ActiveRecord::Base
       if @new_appt
         if current_start >= appt_start && current_start <= appt_end
           @valid = false
-        elsif current_end >= appt_start && current_end <= appt_end
+        else current_end >= appt_start && current_end <= appt_end
           @valid = false
-        else
-          @valid = true
         end
 
       ## if the appointment being checked is an old appointment being updated ##
       else
         if current_start > appt_start && current_start < appt_end
           @valid = false
-        elsif current_end > appt_start && current_end < appt_end
+        else current_end > appt_start && current_end < appt_end
           @valid = false
-        else
-          @valid = true
         end
       end
 
